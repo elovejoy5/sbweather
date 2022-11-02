@@ -12,6 +12,18 @@ export const Forecast = () => {
     return <LoadForecast setForecast={setForecast} />;
   }
 
+  if (forecast.status === 500) {
+    return (
+      <div>
+        <p>
+          NWS Forecast API sometimes returns 500. A refresh usually resolves
+          this
+        </p>
+        <pre>{JSON.stringify(forecast, null, 2)}</pre>
+      </div>
+    );
+  }
+
   // default: render a summary of the forecast
   return <ForecastSummary forecast={forecast} />;
 };
