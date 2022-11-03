@@ -14,8 +14,12 @@ import {
 } from "react-router-dom";
 
 function App() {
+  /**
+   * per https://create-react-app.dev/docs/deployment/#building-for-relative-paths
+   * basename is added to Router here so https://elovejoy5.github.io/sbweather/ will work
+   */
   return (
-    <Router>
+    <Router basename="/sbweather/">
       <div className="App">
         <CssBaseline />
         <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>
