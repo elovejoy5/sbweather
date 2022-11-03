@@ -25,6 +25,7 @@ interface Properties {
 }
 
 export interface NwsForecast {
+  status?: number;
   properties?: Properties;
 }
 
