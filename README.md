@@ -2,7 +2,7 @@
 
 A trivial / not-so-trivial react app. A meditation on how all the things fit together to create a modern web app.
 
-See it in action at [https://elovejoy5.github.io/](https://elovejoy5.github.io/)
+See it in action at [https://elovejoy5.github.io/](https://elovejoy5.github.io/sbweather/)
 
 # Running this locally
 
