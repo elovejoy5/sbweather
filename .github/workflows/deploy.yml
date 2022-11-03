@@ -5,16 +5,6 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-inputs:
-  path:
-    description: "Path of the directory containing the static assets."
-    required: true
-    default: "build/"
-  retention-days:
-    description: "Duration after which artifact will expire in days."
-    required: false
-    default: "1"
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,10 +27,10 @@ jobs:
             --exclude=.github \
             .
         env:
-          INPUT_PATH: ${{ inputs.path }}
+          INPUT_PATH: "build/"
       - name: Upload artifact
         uses: actions/upload-artifact@main
         with:
           name: github-pages
           path: ${{ runner.temp }}/artifact.tar
-          retention-days: ${{ inputs.retention-days }}
+          retention-days: 1
