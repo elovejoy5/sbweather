@@ -20,22 +20,26 @@ function App() {
    */
   return (
     <Router basename="/sbweather/">
-      <div className="App">
-        <CssBaseline />
-        <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>
-          Santa Barbara Forecast
-        </NavLink>
-        <Routes>
-          <Route path="/" element={<Forecast />} />
-          <Route path="about" element={<About />} />
-        </Routes>{" "}
-        <Footer />
-      </div>
+      <Home />
     </Router>
   );
 }
 
 export default App;
+
+export const Home = () => (
+  <div className="App">
+    <CssBaseline />
+    <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>
+      Santa Barbara Forecast
+    </NavLink>
+    <Routes>
+      <Route path="about" element={<About />} />
+      <Route path="*" element={<Forecast />} />
+    </Routes>{" "}
+    <Footer />
+  </div>
+);
 
 const Footer = () => (
   <div>

@@ -30,6 +30,14 @@ This app will use the Material UI to avoid reinventing the wheel and because cre
 
 As the app gets more functionality, it will need be necessary to navigate to different views, and maintain state in the address bar.
 
-My understanding is that `react-router` continues to be the most popular way to handle routing with react apps. I'm not entirely happy about this, as I find react-router to be a little bit challenging to reason about, but it works very well so it will have to be good enough for now.
+My understanding is that `react-router` continues to be the most popular way to handle routing with react apps. I'm not entirely happy about this, as I find react-router to be a little bit hard to grok, but it works very well so it will have to be good enough for now.
 
-TODO: link to commit with routing
+[Commit to add routing](https://github.com/elovejoy5/sbweather/commit/3500b262453a1b40bf68633ce292e567281bb973)
+
+# MVP Continuous Deployement
+
+GitHub Actions make it possible to get GitHub to run tests regularly and deploy the `main` branch any time we make changes to it.
+
+[Two YAML files in `./github/workflows`](https://github.com/elovejoy5/sbweather/pull/1/files) configure the first two actions in `sbweather`, one to run the jest tests any time a commit is made to a PR, and the other to create a build and deploy it automatically any time new code is added to the main branch.
+
+In the future, it may make sense to make the CD more robust, for exmaple by addng some automation to make it hard to push a broken build to `main`, as well some sanity testing to check that the app appears to be working fine after deployment.
