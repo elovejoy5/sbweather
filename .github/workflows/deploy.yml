@@ -1,5 +1,10 @@
 name: "deploy to github pages"
 # borrowed from   https://github.com/actions/upload-pages-artifact/blob/main/action.yml
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 inputs:
   path:
     description: "Path of the directory containing the static assets."
@@ -9,11 +14,6 @@ inputs:
     description: "Duration after which artifact will expire in days."
     required: false
     default: "1"
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   build:
