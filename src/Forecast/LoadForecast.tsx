@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { getForecast, NwsForecast } from "./_getForecast";
+import { getForecast, NwsForecast } from "./util";
 
 /**
  *
@@ -15,10 +15,17 @@ export const LoadForecast = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("loading api!");
         const data: NwsForecast = await getForecast();
-        console.log("LoadForecast data,", data);
-        setForecast(data);
+        if (
+          Object.keys(data).includes("properties") ||
+          Object.keys(data).includes("status")
+        ) {
+          console.log("LoadForecast data,", data);
+          // only update state (and trigger re-render) when we know we got either:
+          // 1. JSON with `properties` that we expect API to render
+          // 2. JSON with `status` that API returns from time to time with 500
+          setForecast(data);
+        }
       } catch (e) {
         console.log("LoadForecast Error: ", e);
       }

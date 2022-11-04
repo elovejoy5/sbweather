@@ -1,5 +1,6 @@
 import React from "react";
-import { NwsForecast } from "./_getForecast";
+import { NwsForecast, fixName, fixShortForecast } from "./util";
+
 import {
   Card,
   CardHeader,
@@ -54,52 +55,3 @@ export const ForecastSummary = ({ forecast }: { forecast: NwsForecast }) => {
     </div>
   );
 };
-
-/**
- * quick-and-dirty helper functions to prevent name and shortForecast from wrapping
- * which makes cards look funny
- */
-function fixName(nameToFix: string | undefined) {
-  console.log(`nameToFix: "${nameToFix}" `);
-  if (!nameToFix) {
-    return nameToFix;
-  }
-  if (nameToFix.includes("Night")) {
-    // shorten name if it includes Night
-    let shorterName = nameToFix.replace("Monday", "Mon");
-    shorterName = shorterName.replace("Tuesday", "Tue");
-    shorterName = shorterName.replace("Wednesday", "Wed");
-    shorterName = shorterName.replace("Thursday", "Thu");
-    shorterName = shorterName.replace("Friday", "Fri");
-    shorterName = shorterName.replace("Saturday", "Sat");
-    shorterName = shorterName.replace("Sunday", "Sun");
-    console.log(`name shortened from "${nameToFix}" to "${shorterName}"`);
-    return shorterName;
-  }
-  return nameToFix;
-}
-
-function fixShortForecast(stringToFix: string | undefined) {
-  if (!stringToFix) {
-    return stringToFix;
-  }
-  /**
-   * https://www.weather.gov/hfo/New_Product_Help
-   * S = Slight Chance (0-20%)
-   * C = Chance (30%-50%)
-   * L = Likely (60%-70%)
-   * O = Occasional/Periods of (80%-100%)
-   * D = Definite (80%-100%)
-   */
-  if (stringToFix.includes("Slight Chance Rain Showers")) {
-    const newString = "S Showers";
-    console.log(`name shortened from "${stringToFix}" to "${newString}"`);
-    return newString;
-  }
-  if (stringToFix.includes("Chance Rain Showers")) {
-    const newString = "C Showers";
-    console.log(`name shortened from "${stringToFix}" to "${newString}"`);
-    return newString;
-  }
-  return stringToFix;
-}

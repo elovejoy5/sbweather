@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { ForecastSummary } from "./ForecastSummary";
-import { getSampleForecast } from "./_getForecast";
+import { getSampleForecast } from "./util";
 
 it("renders shortForecast && detailed forecast when getting at least one forecast", () => {
   render(<ForecastSummary forecast={getSampleForecast()} />);

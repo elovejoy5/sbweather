@@ -22,6 +22,7 @@ In addition to all the goodness of create-react-app, this app includes:
 - Weather forecasts from [National Weather Service API](https://www.weather.gov/documentation/services-web-api)
 - UI widgets from [Material UI](https://mui.com/material-ui/getting-started/overview/)
 - routing with [react-router](https://github.com/remix-run/react-router/blob/main/docs/upgrading/v5.md)
+- CD and CI with GitHub Actions
 
 # What am I thinking
 

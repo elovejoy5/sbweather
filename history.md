@@ -40,4 +40,6 @@ GitHub Actions make it possible to get GitHub to run tests regularly and deploy 
 
 [Two YAML files in `./github/workflows`](https://github.com/elovejoy5/sbweather/pull/1/files) configure the first two actions in `sbweather`, one to run the jest tests any time a commit is made to a PR, and the other to create a build and deploy it automatically any time new code is added to the main branch.
 
+Rant: [I love checkmarks](./docs/checkmarks_are_important.md)
+
 In the future, it may make sense to make the CD more robust, for exmaple by addng some automation to make it hard to push a broken build to `main`, as well some sanity testing to check that the app appears to be working fine after deployment.

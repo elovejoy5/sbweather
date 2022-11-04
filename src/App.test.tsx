@@ -9,7 +9,7 @@ global.fetch = jest.fn(() =>
   })
 ) as jest.Mock;
 
-test("renders learn react link", () => {
+test("App can render without blowing up", () => {
   // use <MemoryRouter> when you want to manually control the history
   // https://testing-library.com/docs/example-react-router/
   render(
