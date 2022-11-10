@@ -18,11 +18,7 @@ export const Footer = () => {
         sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
       >
         <BottomNavigationAction value="/" label="Home" icon={<Home />} />
-        <BottomNavigationAction
-          value="/about"
-          label="Favorites"
-          icon={<Help />}
-        />
+        <BottomNavigationAction value="/about" label="About" icon={<Help />} />
       </BottomNavigation>
     </div>
   );

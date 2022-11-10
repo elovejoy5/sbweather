@@ -17,6 +17,6 @@ test("App can render without blowing up", () => {
       <AppRoutes />
     </MemoryRouter>
   );
-  const linkElement = screen.getByText(/Santa Barbara Forecast/i);
+  const linkElement = screen.getByText(/Loading Forecast/i);
   expect(linkElement).toBeInTheDocument();
 });
