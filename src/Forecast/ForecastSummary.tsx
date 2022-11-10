@@ -18,7 +18,7 @@ export const ForecastSummary = ({ forecast }: { forecast: NwsForecast }) => {
     return <div>Sorry, forecast does not appear to have loaded</div>;
   }
   return (
-    <div>
+    <div style={{ margin: "10px", paddingBottom: "3em" }}>
       {/* <h1>Forecast</h1>
       <h2>Now:</h2>
       <pre style={{ textAlign: "left" }}>{JSON.stringify(fc, null, 2)}</pre> */}
@@ -28,7 +28,7 @@ export const ForecastSummary = ({ forecast }: { forecast: NwsForecast }) => {
           const shortForecast = fixShortForecast(fc?.shortForecast);
           return (
             //https://mui.com/material-ui/react-grid/
-            <Grid item key={i} xs={6} sm={4} md={2} lg={1}>
+            <Grid item key={i} xs={6} sm={4} md={2} lg={2}>
               {/* https://mui.com/material-ui/api/card/ */}
               <Card sx={{ height: "100%" }} key={i}>
                 <CardHeader title={name} subheader={shortForecast} />

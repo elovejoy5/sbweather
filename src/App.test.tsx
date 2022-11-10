@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { Home } from "./App";
+import { AppRoutes } from "./App";
 import { MemoryRouter } from "react-router-dom";
 
 global.fetch = jest.fn(() =>
@@ -14,9 +14,9 @@ test("App can render without blowing up", () => {
   // https://testing-library.com/docs/example-react-router/
   render(
     <MemoryRouter initialEntries={["/sbweather/"]}>
-      <Home />
+      <AppRoutes />
     </MemoryRouter>
   );
-  const linkElement = screen.getByText(/Santa Barbara Forecast/i);
+  const linkElement = screen.getByText(/Loading Forecast/i);
   expect(linkElement).toBeInTheDocument();
 });
