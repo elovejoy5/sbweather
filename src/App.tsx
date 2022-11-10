@@ -12,6 +12,7 @@ import {
   Route,
   NavLink,
 } from "react-router-dom";
+import { Footer } from "./nav/Footer";
 
 function App() {
   /**
@@ -20,14 +21,14 @@ function App() {
    */
   return (
     <Router basename="/sbweather/">
-      <Home />
+      <AppRoutes />
     </Router>
   );
 }
 
 export default App;
 
-export const Home = () => (
+export const AppRoutes = () => (
   <div className="App">
     <CssBaseline />
     <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>
@@ -38,27 +39,6 @@ export const Home = () => (
       <Route path="*" element={<Forecast />} />
     </Routes>{" "}
     <Footer />
-  </div>
-);
-
-const Footer = () => (
-  <div>
-    <NavLink
-      to="/about"
-      style={({ isActive }) => ({
-        textDecoration: isActive ? "none" : "underline",
-      })}
-    >
-      About
-    </NavLink>{" "}
-    <NavLink
-      to="/"
-      style={({ isActive }) => ({
-        textDecoration: isActive ? "none" : "underline",
-      })}
-    >
-      Home
-    </NavLink>
   </div>
 );
 
