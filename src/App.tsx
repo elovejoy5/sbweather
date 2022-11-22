@@ -9,6 +9,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Footer } from "./nav/Footer";
 import { Masthead } from "./nav/Masthead";
 import { About } from "./About";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   /**
@@ -16,12 +19,14 @@ function App() {
    * basename is added to Router here so https://elovejoy5.github.io/sbweather/ will work
    */
   return (
-    <Router basename="/sbweather/">
-      <CssBaseline />
-      <Masthead />
-      <AppRoutes />
-      <Footer />
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router basename="/sbweather/">
+        <CssBaseline />
+        <Masthead />
+        <AppRoutes />
+        <Footer />
+      </Router>
+    </QueryClientProvider>
   );
 }
 

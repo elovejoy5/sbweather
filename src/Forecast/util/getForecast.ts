@@ -41,13 +41,11 @@ export async function getForecast(): Promise<NwsForecast> {
     "https://api.weather.gov/gridpoints/LOX/102,69/forecast"
   );
 
-  if (!response) {
-    // ugly hack:
-    // jest fetch mock returns undefined, so we return an empty object here to keep
-    // jest logs clean
-    // console.log("*** jest TODO *** mock returns undefined, needs to be dialed");
-    return {};
-  }
+  console.log(
+    "getForecast() called, process.env.NODE_ENV: ",
+    process.env.NODE_ENV
+  );
+
   return response.json();
 }
 
