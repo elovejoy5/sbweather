@@ -42,7 +42,7 @@ export const apiSuccessJson = {
     periods: [
       {
         number: 1,
-        name: "S Day 1",
+        name: "Mock Day 1",
         startTime: "2022-11-20T13:00:00-08:00",
         endTime: "2022-11-20T18:00:00-08:00",
         isDaytime: true,
@@ -57,7 +57,7 @@ export const apiSuccessJson = {
       },
       {
         number: 2,
-        name: "S Night 1",
+        name: "Mock Night 1",
         startTime: "2022-11-20T18:00:00-08:00",
         endTime: "2022-11-21T06:00:00-08:00",
         isDaytime: false,
@@ -73,7 +73,7 @@ export const apiSuccessJson = {
       },
       {
         number: 3,
-        name: "S Day 2",
+        name: "Mock Day 2",
         startTime: "2022-11-21T06:00:00-08:00",
         endTime: "2022-11-21T18:00:00-08:00",
         isDaytime: true,
@@ -89,7 +89,7 @@ export const apiSuccessJson = {
       },
       {
         number: 4,
-        name: "S Night 2",
+        name: "Mock Night 2",
         startTime: "2022-11-21T18:00:00-08:00",
         endTime: "2022-11-22T06:00:00-08:00",
         isDaytime: false,
@@ -105,7 +105,7 @@ export const apiSuccessJson = {
       },
       {
         number: 5,
-        name: "S Day 3",
+        name: "Mock Day 3",
         startTime: "2022-11-22T06:00:00-08:00",
         endTime: "2022-11-22T18:00:00-08:00",
         isDaytime: true,
@@ -121,7 +121,7 @@ export const apiSuccessJson = {
       },
       {
         number: 6,
-        name: "S Night 3",
+        name: "Mock Night 3",
         startTime: "2022-11-22T18:00:00-08:00",
         endTime: "2022-11-23T06:00:00-08:00",
         isDaytime: false,
@@ -136,7 +136,7 @@ export const apiSuccessJson = {
       },
       {
         number: 7,
-        name: "S Day 4",
+        name: "Mock Day 4",
         startTime: "2022-11-23T06:00:00-08:00",
         endTime: "2022-11-23T18:00:00-08:00",
         isDaytime: true,
@@ -151,7 +151,7 @@ export const apiSuccessJson = {
       },
       {
         number: 8,
-        name: "S Night 4",
+        name: "Mock Night 4",
         startTime: "2022-11-23T18:00:00-08:00",
         endTime: "2022-11-24T06:00:00-08:00",
         isDaytime: false,
@@ -166,7 +166,7 @@ export const apiSuccessJson = {
       },
       {
         number: 9,
-        name: "S Day 5",
+        name: "Mock Day 5",
         startTime: "2022-11-24T06:00:00-08:00",
         endTime: "2022-11-24T18:00:00-08:00",
         isDaytime: true,
@@ -181,7 +181,7 @@ export const apiSuccessJson = {
       },
       {
         number: 10,
-        name: "S Night 5",
+        name: "Mock Night 5",
         startTime: "2022-11-24T18:00:00-08:00",
         endTime: "2022-11-25T06:00:00-08:00",
         isDaytime: false,
@@ -196,7 +196,7 @@ export const apiSuccessJson = {
       },
       {
         number: 11,
-        name: "S Day 6",
+        name: "Mock Day 6",
         startTime: "2022-11-25T06:00:00-08:00",
         endTime: "2022-11-25T18:00:00-08:00",
         isDaytime: true,
@@ -211,7 +211,7 @@ export const apiSuccessJson = {
       },
       {
         number: 12,
-        name: "S Night 6",
+        name: "Mock Night 6",
         startTime: "2022-11-25T18:00:00-08:00",
         endTime: "2022-11-26T06:00:00-08:00",
         isDaytime: false,
@@ -226,7 +226,7 @@ export const apiSuccessJson = {
       },
       {
         number: 13,
-        name: "S Day 7",
+        name: "Mock Day 7",
         startTime: "2022-11-26T06:00:00-08:00",
         endTime: "2022-11-26T18:00:00-08:00",
         isDaytime: true,
@@ -241,7 +241,7 @@ export const apiSuccessJson = {
       },
       {
         number: 14,
-        name: "S Night 7",
+        name: "Mock Night 7",
         startTime: "2022-11-26T18:00:00-08:00",
         endTime: "2022-11-27T06:00:00-08:00",
         isDaytime: false,

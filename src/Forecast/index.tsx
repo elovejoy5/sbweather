@@ -2,7 +2,7 @@ import React from "react";
 import { ForecastSummary } from "./ForecastSummary";
 import { useQuery } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { apiSuccessJson } from "./util/test_payloads";
+import { apiSuccessJson } from "../mocks/test_payloads";
 import { getForecast } from "./util";
 
 export const Forecast = () => {
