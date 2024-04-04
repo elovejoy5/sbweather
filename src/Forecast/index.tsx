@@ -1,20 +1,39 @@
-import React, { useState } from "react";
-
-import { NwsForecast } from "./util";
-import { LoadForecast } from "./LoadForecast";
+import React from "react";
 import { ForecastSummary } from "./ForecastSummary";
+import { useQuery } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { apiSuccessJson } from "../mocks/test_payloads";
+import { getForecast } from "./util";
 
 export const Forecast = () => {
-  // MVP: store forecat in component state:
-  const [forecast, setForecast] = useState<NwsForecast>({});
+  // component uses react-query to call getForecast:
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["nwsForecast"],
+    queryFn: getForecast,
+    retry: false,
+    staleTime: 300000, // 5 min cache = 1000*60*5
+  });
+  if (isLoading) return <div>"Loading..."</div>;
 
-  if (Object.keys(forecast).length === 0) {
-    // no state? Render LoadForecast to retreive from API
-    return <LoadForecast setForecast={setForecast} />;
+  if (isError || data === undefined) {
+    console.log(`getForecast returned error: ${error}`);
+    // No forecast? Render a dummy forecast:
+    return <ForecastWithDummyData />;
   }
 
-  if (forecast.status === 500) {
-    return (
+  // default: render a summary of the forecast
+  console.log("getForecast returned data: ", data);
+  return (
+    <div>
+      <ForecastSummary forecast={data} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </div>
+  );
+};
+
+const ForecastWithDummyData = () => {
+  return (
+    <div>
       <div>
         <p>
           NWS Forecast API intermittently returns 500{" "}
@@ -36,12 +55,9 @@ export const Forecast = () => {
           with an API key in the future."
         </p>
         <pre>User-Agent: (myweatherapp.com, contact@myweatherapp.com)</pre>
-        <p>Error message from API:</p>
-        <pre>{JSON.stringify(forecast, null, 2)}</pre>
       </div>
-    );
-  }
-
-  // default: render a summary of the forecast
-  return <ForecastSummary forecast={forecast} />;
+      <h1>Sample Data</h1>
+      <ForecastSummary forecast={apiSuccessJson} />
+    </div>
+  );
 };

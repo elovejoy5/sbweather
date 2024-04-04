@@ -1,3 +1,4 @@
+import axios from "axios";
 /**
  * getForecast() will fetch a forecast which has interface `NwsForecast`
  *  - Note: needs to be mocked by some tests to avoid API calls when Jest runs
@@ -30,25 +31,38 @@ export interface NwsForecast {
 }
 
 export async function getForecast(): Promise<NwsForecast> {
-  /**
-   * Note: may need to set a custom User Agent in the future. API docs say (urls below):
-   *   A User Agent is required to identify your application.
-   *   If you include contact information (website or email), we can contact you if your string
-   *   is associated to a security event. This will be replaced with an API key in the future.
-   */
+  // const url = "https://api.weather.gov/gridpoints/LOX/103,70/forecast"; // santa barbara
+  const s3Domain = "https://sbweather-s3-bucket.s3.us-west-2.amazonaws.com/";
+  const s3Key = new Date().toISOString().substring(0, 10) + ".json";
+  const url = s3Domain + s3Key;
+  // const url = "https://api.weather.gov/gridpoints/LOX/102,69/forecast"; // ocean, should generate 404
+  const response = await axios.get(url);
+  const status = response.status;
+  const responseJson = response.data;
 
-  const response = await fetch(
-    "https://api.weather.gov/gridpoints/LOX/102,69/forecast"
-  );
+  return new Promise((resolve, reject) => {
+    try {
+      if (status === 200) {
+        const prettyJson = JSON.stringify(responseJson, null, 2);
+        const sbweatherDebug = Boolean(localStorage.getItem("sbweatherDebug"));
+        const apiCallDescription = sbweatherDebug
+          ? `getForecast() called, status: ${status}, responseJson: \n` +
+            prettyJson
+          : `getForecast() called, status: ${status}`;
+        console.log(apiCallDescription);
+      }
 
-  if (!response) {
-    // ugly hack:
-    // jest fetch mock returns undefined, so we return an empty object here to keep
-    // jest logs clean
-    // console.log("*** jest TODO *** mock returns undefined, needs to be dialed");
-    return {};
-  }
-  return response.json();
+      resolve(responseJson);
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        const status = error?.response?.status;
+        console.log(`call to ${url} returned status: ${status}, response: \n`);
+        console.log(error.response);
+        reject({ status: status });
+      }
+      reject({ status: 500 });
+    }
+  });
 }
 
 /**
