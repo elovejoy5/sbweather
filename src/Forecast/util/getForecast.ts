@@ -31,17 +31,10 @@ export interface NwsForecast {
 }
 
 export async function getForecast(): Promise<NwsForecast> {
-  /**
-   * Note: may need to set a custom User Agent in the future. API docs say (urls below):
-   *   A User Agent is required to identify your application.
-   *   If you include contact information (website or email), we can contact you if your string
-   *   is associated to a security event. This will be replaced with an API key in the future.
-   *
-   * Note that code below tries to set customer user-agent, but it doesn't seem to work.
-   */
-
-  const url = "https://api.weather.gov/gridpoints/LOX/103,70/forecast"; // santa barbara
-
+  // const url = "https://api.weather.gov/gridpoints/LOX/103,70/forecast"; // santa barbara
+  const s3Domain = "https://sbweather-s3-bucket.s3.us-west-2.amazonaws.com/";
+  const s3Key = new Date().toISOString().substring(0, 10) + ".json";
+  const url = s3Domain + s3Key;
   // const url = "https://api.weather.gov/gridpoints/LOX/102,69/forecast"; // ocean, should generate 404
   const response = await axios.get(url);
   const status = response.status;
