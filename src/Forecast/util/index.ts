@@ -23,28 +23,24 @@ export function fixName(nameToFix: string | undefined) {
 }
 
 export function fixShortForecast(stringToFix: string | undefined) {
-  if (!stringToFix) {
-    return stringToFix;
+  switch (stringToFix) {
+    case "Slight Chance Light Rain":
+    case "Partly Sunny then Slight Chance Light Rain":
+      return "SC Rain";
+    case "Chance Light Rain":
+      return "C Rain";
+    case "Rain Likely":
+    case "Light Rain Likely":
+      return "L Rain";
+    case "Slight Chance Rain Showers":
+      return "SC Showers";
+    case "Chance Rain Showers":
+      return "C Showers";
+    case "Chance Showers And Thunderstorms":
+      return "C Showers & TS";
+    case "Slight Chance Showers And Thunderstorms then Partly Cloudy":
+      return "SC Showers & TS";
+    default:
+      return stringToFix;
   }
-  if (stringToFix.includes("Slight Chance Rain Showers")) {
-    const newString = "S Showers";
-    return newString;
-  }
-  if (stringToFix.includes("Slight Chance Light Rain")) {
-    const newString = "S Rain";
-    return newString;
-  }
-  if (stringToFix.includes("Chance Rain Showers")) {
-    const newString = "C Showers";
-    return newString;
-  }
-  if (stringToFix.includes("Rain Likely")) {
-    const newString = "L Rain";
-    return newString;
-  }
-  if (stringToFix.includes("Chance Light Rain")) {
-    return "C Rain";
-  }
-
-  return stringToFix;
 }
