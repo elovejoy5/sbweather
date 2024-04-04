@@ -13,6 +13,10 @@ Thanks to the magic of [Create React App](https://github.com/facebook/create-rea
 - `yarn test` to run jest tests in watch mode
 - `yarn build` to create a deployable build
 
+# iterating on CI and CD
+
+By default, deploy is only enabled for branch `main`. The repo is also configured to allow deploy from `fixBuild` branch so that it is easy to create a branch to iterate on CI or CD automation: any deploy to this branch will execute, and since branch names are simply labels, it should be possible to reuse `fixBuild` periodically.
+
 # Good things
 
 In addition to all the goodness of create-react-app, this app includes:

@@ -10,7 +10,7 @@ import { fixShortForecast } from "./index";
  */
 
 it("fixShortForecast shortens...", () => {
-  expect(fixShortForecast("Slight Chance Rain Showers")).toBe("S Showers");
+  expect(fixShortForecast("Slight Chance Rain Showers")).toBe("SC Showers");
   expect(fixShortForecast("Chance Rain Showers")).toBe("C Showers");
 });
 
@@ -20,7 +20,7 @@ it("fixShortForecast shortens name of days for night forecasts", () => {
 
 it("fixShortForecast", () => {
   expect(fixShortForecast("Partly Sunny then Slight Chance Light Rain")).toBe(
-    "S Rain"
+    "SC Rain"
   );
   expect(fixShortForecast("Light Rain Likely")).toBe("L Rain");
   expect(fixShortForecast("Chance Light Rain")).toBe("C Rain");
