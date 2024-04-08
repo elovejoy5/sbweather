@@ -63,7 +63,7 @@ export async function getForecast(): Promise<NwsForecast> {
       console.log(apiCallDescription);
       resolve(todayResponse.data);
     }
-    if (yesterdayResponse.status == 200) {
+    if (yesterdayResponse.status === 200) {
       const prettyJson = JSON.stringify(yesterdayResponse.data, null, 2);
       const sbweatherDebug = Boolean(localStorage.getItem("sbweatherDebug"));
       const apiCallDescription = sbweatherDebug
