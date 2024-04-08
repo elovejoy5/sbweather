@@ -33,35 +33,60 @@ export interface NwsForecast {
 export async function getForecast(): Promise<NwsForecast> {
   // const url = "https://api.weather.gov/gridpoints/LOX/103,70/forecast"; // santa barbara
   const s3Domain = "https://sbweather-s3-bucket.s3.us-west-2.amazonaws.com/";
-  const s3Key = new Date().toISOString().substring(0, 10) + ".json";
-  const url = s3Domain + s3Key;
+  const todayFilename = new Date().toISOString().substring(0, 10) + ".json";
+  var yesterday = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
+  const yesterdayFilename = yesterday.toISOString().substring(0, 10) + ".json";
+  const todayUrl = s3Domain + todayFilename;
+  const yesterdayUrl = s3Domain + yesterdayFilename;
   // const url = "https://api.weather.gov/gridpoints/LOX/102,69/forecast"; // ocean, should generate 404
-  const response = await axios.get(url);
-  const status = response.status;
-  const responseJson = response.data;
 
+  let todayResponse = { status: 0, data: {} },
+    yesterdayResponse = { status: 0, data: {} };
+  try {
+    todayResponse = await axios.get(todayUrl);
+  } catch (error: any) {
+    /**
+     * currently one json file is created for each date (will be overwritten a few times a day)
+     * This means that in the afternoon PT, a check for TODAY_DATE.json will return 404
+     * And getForecast needs to grab yesterday's file instead
+     */
+    yesterdayResponse = await axios.get(yesterdayUrl);
+  }
   return new Promise((resolve, reject) => {
-    try {
-      if (status === 200) {
-        const prettyJson = JSON.stringify(responseJson, null, 2);
-        const sbweatherDebug = Boolean(localStorage.getItem("sbweatherDebug"));
-        const apiCallDescription = sbweatherDebug
-          ? `getForecast() called, status: ${status}, responseJson: \n` +
-            prettyJson
-          : `getForecast() called, status: ${status}`;
-        console.log(apiCallDescription);
-      }
-
-      resolve(responseJson);
-    } catch (error: any) {
-      if (axios.isAxiosError(error)) {
-        const status = error?.response?.status;
-        console.log(`call to ${url} returned status: ${status}, response: \n`);
-        console.log(error.response);
-        reject({ status: status });
-      }
-      reject({ status: 500 });
+    if (todayResponse.status === 200) {
+      const prettyJson = JSON.stringify(todayResponse.data, null, 2);
+      const sbweatherDebug = Boolean(localStorage.getItem("sbweatherDebug"));
+      const apiCallDescription = sbweatherDebug
+        ? `getForecast() called, status: ${todayResponse.status}, responseJson: \n` +
+          prettyJson
+        : `getForecast() called, status: ${todayResponse.status}`;
+      console.log(apiCallDescription);
+      resolve(todayResponse.data);
     }
+    if (yesterdayResponse.status == 200) {
+      const prettyJson = JSON.stringify(yesterdayResponse.data, null, 2);
+      const sbweatherDebug = Boolean(localStorage.getItem("sbweatherDebug"));
+      const apiCallDescription = sbweatherDebug
+        ? `getForecast() called, yesterdayStatus: ${yesterdayResponse.status}, responseJson: \n` +
+          prettyJson
+        : `getForecast() called, yesterdayStatus: ${yesterdayResponse.status}`;
+      console.log(apiCallDescription);
+      resolve(yesterdayResponse.data);
+    }
+    // if (axios.isAxiosError(error)) {
+    //   const status = error?.response?.status;
+    //   console.log(
+    //     `call to ${todayUrl} returned status: ${status}, response: \n`
+    //   );
+    //   console.log(error.response);
+    //   reject({ status: status });
+    // }
+    // console.log(
+    //   `getForecast() called, todayUrl is:\n\t${todayUrl} \nyesterdayUrl is \n\t${yesterdayUrl}`,
+    //   `todayStatus is ${todayStatus}`,
+    //   `yesterdayData is ${yesterdayData}`
+    // );
+    reject({ status: 500 });
   });
 }
 
