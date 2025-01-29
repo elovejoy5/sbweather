@@ -1,12 +1,14 @@
 # sbweather
 
-A trivial / not-so-trivial react app. A meditation on how all the things fit together to create a modern web app.
+A mostly trivial react app to render weather forecasts from NWS APIs.
 
 See it in action at [https://elovejoy5.github.io/](https://elovejoy5.github.io/sbweather/)
 
 # Running this locally
 
-Thanks to the magic of [Create React App](https://github.com/facebook/create-react-app), you don't have to think about webpack or babel:
+```
+git clone https://github.com/elovejoy5/sbweather.git
+```
 
 - `yarn install` to populate node modules
 - `yarn start` to run it on your local
@@ -15,19 +17,4 @@ Thanks to the magic of [Create React App](https://github.com/facebook/create-rea
 
 # iterating on CI and CD
 
-By default, deploy is only enabled for branch `main`. The repo is also configured to allow deploy from `fixBuild` branch so that it is easy to create a branch to iterate on CI or CD automation: any deploy to this branch will execute, and since branch names are simply labels, it should be possible to reuse `fixBuild` periodically.
-
-# Good things
-
-In addition to all the goodness of create-react-app, this app includes:
-
-- Typescript, which helps us think more clearly about our types, and helps the IDE be much more helpful with prompts, warnings, and errors.
-- Tests created with Jest and testing-library, to help you document what the app is suposed to do, and whether it is working.
-- Weather forecasts from [National Weather Service API](https://www.weather.gov/documentation/services-web-api)
-- UI widgets from [Material UI](https://mui.com/material-ui/getting-started/overview/)
-- routing with [react-router](https://github.com/remix-run/react-router/blob/main/docs/upgrading/v5.md)
-- CD and CI with GitHub Actions
-
-# What am I thinking
-
-[Notes as I am building out this app](history.md)
+PRs will be deployed to github pages by [github action](https://github.com/elovejoy5/sbweather/blob/main/.github/workflows/deploy.yml)
