@@ -23,7 +23,12 @@ function App() {
       <Router basename="/sbweather/">
         <CssBaseline />
         <Masthead />
-        <AppRoutes />
+        <div className="App">
+          <Routes>
+            <Route path="about" element={<About />} />
+            <Route path="*" element={<Forecast />} />
+          </Routes>
+        </div>
         <Footer />
       </Router>
     </QueryClientProvider>
@@ -31,12 +36,3 @@ function App() {
 }
 
 export default App;
-
-export const AppRoutes = () => (
-  <div className="App">
-    <Routes>
-      <Route path="about" element={<About />} />
-      <Route path="*" element={<Forecast />} />
-    </Routes>{" "}
-  </div>
-);
