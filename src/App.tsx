@@ -5,7 +5,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import CssBaseline from "@mui/material/CssBaseline";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Footer } from "./nav/Footer";
 import { Masthead } from "./nav/Masthead";
 import { About } from "./About";
@@ -14,23 +14,22 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient();
 
 function App() {
-  /**
-   * per https://create-react-app.dev/docs/deployment/#building-for-relative-paths
-   * basename is added to Router here so https://elovejoy5.github.io/sbweather/ will work
-   */
   return (
     <QueryClientProvider client={queryClient}>
-      <Router basename="/sbweather/">
+      // basename so https://elovejoy5.github.io/sbweather/ will work
+      <BrowserRouter basename="/sbweather/">
         <CssBaseline />
         <Masthead />
         <div className="App">
           <Routes>
             <Route path="about" element={<About />} />
-            <Route path="*" element={<Forecast />} />
+            <Route path="forecast" element={<Forecast />} />
+            <Route path="/" element={<Navigate to="/forecast" />} />
+            <Route path="*" element={<Navigate to="/forecast" />} />
           </Routes>
         </div>
         <Footer />
-      </Router>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 }

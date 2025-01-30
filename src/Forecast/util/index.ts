@@ -40,6 +40,8 @@ export function fixShortForecast(stringToFix: string | undefined) {
       return "C Showers & TS";
     case "Slight Chance Showers And Thunderstorms then Partly Cloudy":
       return "SC Showers & TS";
+    case "Patchy Fog then Slight Chance Light Rain":
+      return "Patchy Fog; SC L Rain";
     default:
       return stringToFix;
   }
