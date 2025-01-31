@@ -12,8 +12,9 @@ export function ForecastJson() {
   if (error) return <div>Error loading forecast</div>;
 
   return (
-    <pre style={{ margin: "20px", overflow: "auto" }}>
-      {JSON.stringify(data, null, 2)}
-    </pre>
+    <div style={{ margin: "10px", overflow: "auto" }}>
+      <p>raw JSON from NWS API:</p>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
   );
 }
