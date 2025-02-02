@@ -25,13 +25,61 @@ export const ForecastSummary = ({ forecast }: { forecast: NwsForecast }) => {
           const shortForecast = fixShortForecast(fc?.shortForecast);
           return (
             <Grid size={{ xs: 6, sm: 4, md: 2, lg: 2 }} key={i}>
-              <Card sx={{ height: "100%" }}>
-                <CardHeader title={name} subheader={shortForecast} />
+              <Card sx={{ height: "100%", position: "relative" }}>
+                <CardHeader
+                  title={name}
+                  subheader={shortForecast}
+                  sx={{
+                    "& .MuiCardHeader-subheader": {
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      width: "90%",
+                    },
+                  }}
+                />
                 <CardMedia component="img" image={fc?.icon} alt={fc?.name} />
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary">
+                <CardContent
+                  sx={{
+                    position: "absolute",
+                    bottom: "4.5em",
+                    left: 0,
+                    right: 0,
+                    color: "white",
+                    padding: 0,
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "white",
+                      backgroundColor: "rgba(0, 0, 0, 0.7)",
+                      padding: "0.5em",
+                    }}
+                  >
                     {fc?.detailedForecast}
                   </Typography>
+                </CardContent>
+                <CardContent
+                  sx={{
+                    py: 1,
+                    zIndex: "modal",
+                  }}
+                >
+                  {fc?.isDaytime ? (
+                    <>
+                      <Typography variant="caption" display="block">
+                        sunrise
+                      </Typography>
+                      <Typography variant="caption" display="block">
+                        sunset
+                      </Typography>
+                    </>
+                  ) : (
+                    <Typography variant="caption" display="block">
+                      phase of moon
+                    </Typography>
+                  )}
                 </CardContent>
               </Card>
             </Grid>
