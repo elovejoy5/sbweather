@@ -5,12 +5,49 @@ export const About = () => (
       `sbweather` is a prototype react app I tend to hack on when I'm job
       hunting.
     </p>
-    <p>
-      Many thanks to the NWS for their fun{" "}
-      <a href="https://www.weather.gov/documentation/services-web-api">APIs</a>.
-    </p>
+    <h2>Ingredients</h2>
+    <table border={1}>
+      <tr>
+        <td>Ingredient</td>
+        <td>Notes</td>
+        <td>Link(s)</td>
+      </tr>
+      <tr>
+        <td>Cursor</td>
+        <td>Much more like pairing than I thought it would be</td>
+        <td>
+          <div>
+            <a href="https://www.cursor.com/">https://www.cursor.com/</a>
+          </div>
+          <div>
+            <a href="https://cursor.directory/">https://cursor.directory/</a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>NWS API</td>
+        <td>Forecast data</td>
+        <td>
+          <a href="https://www.weather.gov/documentation/services-web-api">
+            APIs
+          </a>
+        </td>{" "}
+      </tr>
+      <tr>
+        <td>MUI</td>
+        <td>UI components</td>
+        <td>
+          <div>
+            <a href="https://mui.com/">https://mui.com/</a>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <h2>Notes</h2>
     <p>2024</p>
     <ul>
+      <li>suncalc for sun and moon times / phases</li>
       <li>Playing with cursor. Nice to have an AI to pair with!</li>
       <li>Updated dependencies to latest</li>
     </ul>
