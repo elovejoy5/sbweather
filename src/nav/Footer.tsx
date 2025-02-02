@@ -1,4 +1,3 @@
-import React from "react";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { Home, Help, Settings, WbSunny } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import SunCalc from "suncalc";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
