@@ -1,17 +1,15 @@
-import { render } from "../utils/test-utils";
+import { screen, render } from "../utils/test-utils";
 import { ForecastSummary } from "./ForecastSummary";
 import { getSampleForecast } from "./util";
 
 it("renders shortForecast && detailed forecast when getting at least one forecast", () => {
-  const { getByText } = render(
-    <ForecastSummary forecast={getSampleForecast()} />
-  );
+  render(<ForecastSummary forecast={getSampleForecast()} />);
   expect(
-    getByText(
+    screen.getByText(
       "Patchy fog between 11pm and 5am. Mostly cloudy, with a low around 54. East northeast wind 5 to 10 mph."
     )
   ).toBeInTheDocument();
-  expect(getByText("Patchy Fog")).toBeInTheDocument();
+  expect(screen.getByText("Patchy Fog")).toBeInTheDocument();
 });
 
 /**
@@ -20,16 +18,16 @@ it("renders shortForecast && detailed forecast when getting at least one forecas
  */
 it("renders error when arg undefined", () => {
   // @ts-ignore: Type 'undefined' is not assignable to type 'NwsForecast'
-  const { getByText } = render(<ForecastSummary forecast={undefined} />);
+  render(<ForecastSummary forecast={undefined} />);
   expect(
-    getByText("Sorry, forecast does not appear to have loaded")
+    screen.getByText("Sorry, forecast does not appear to have loaded")
   ).toBeInTheDocument();
 });
 
 it("renders error when arg []", () => {
   // @ts-ignore: Type 'never[]' has no properties in common with type 'NwsForecast'
-  const { getByText } = render(<ForecastSummary forecast={[]} />);
+  render(<ForecastSummary forecast={[]} />);
   expect(
-    getByText("Sorry, forecast does not appear to have loaded")
+    screen.getByText("Sorry, forecast does not appear to have loaded")
   ).toBeInTheDocument();
 });
