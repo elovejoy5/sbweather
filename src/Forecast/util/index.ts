@@ -1,5 +1,5 @@
 export * from "./getForecast";
-
+export * from "./getAstronomicalData";
 /**
  * quick-and-dirty helper functions to prevent name and shortForecast from wrapping
  * which messes up vertical alignment of cards
@@ -40,6 +40,8 @@ export function fixShortForecast(stringToFix: string | undefined) {
       return "C Showers & TS";
     case "Slight Chance Showers And Thunderstorms then Partly Cloudy":
       return "SC Showers & TS";
+    case "Patchy Fog then Slight Chance Light Rain":
+      return "Patchy Fog; SC L Rain";
     default:
       return stringToFix;
   }

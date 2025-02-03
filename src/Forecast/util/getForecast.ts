@@ -1,4 +1,5 @@
 import axios from "axios";
+
 /**
  * getForecast() will fetch a forecast which has interface `NwsForecast`
  *  - Note: needs to be mocked by some tests to avoid API calls when Jest runs
@@ -73,37 +74,21 @@ export async function getForecast(): Promise<NwsForecast> {
       console.log(apiCallDescription);
       resolve(yesterdayResponse.data);
     }
-    // if (axios.isAxiosError(error)) {
-    //   const status = error?.response?.status;
-    //   console.log(
-    //     `call to ${todayUrl} returned status: ${status}, response: \n`
-    //   );
-    //   console.log(error.response);
-    //   reject({ status: status });
-    // }
-    // console.log(
-    //   `getForecast() called, todayUrl is:\n\t${todayUrl} \nyesterdayUrl is \n\t${yesterdayUrl}`,
-    //   `todayStatus is ${todayStatus}`,
-    //   `yesterdayData is ${yesterdayData}`
-    // );
     reject({ status: 500 });
   });
 }
 
 /**
-
-https://www.weather.gov/documentation/services-web-api
-
-If you do not know the grid that correlates to your location, you can use the /points endpoint to retrieve the exact grid endpoint by coordinates:
-https://api.weather.gov/points/34.3985,-119.7498
-(This is how to figure out to call /LOX/102,69/ for Santa Barbara )
-
-
-Forecasts are divided into 2.5km grids. Each NWS office is responsible for a section of the grid. The API endpoint for the forecast at a specific grid is:
-
-https://api.weather.gov/gridpoints/{office}/{grid X},{grid Y}/forecast
-https://api.weather.gov/gridpoints/LOX/102,69/forecast
-
+ * https://www.weather.gov/documentation/services-web-api
+ *
+ * If you do not know the grid that correlates to your location, you can use the /points endpoint to retrieve the exact grid endpoint by coordinates:
+ * https://api.weather.gov/points/34.3985,-119.7498
+ * (This is how to figure out to call /LOX/102,69/ for Santa Barbara )
+ *
+ * Forecasts are divided into 2.5km grids. Each NWS office is responsible for a section of the grid. The API endpoint for the forecast at a specific grid is:
+ *
+ * https://api.weather.gov/gridpoints/{office}/{grid X},{grid Y}/forecast
+ * https://api.weather.gov/gridpoints/LOX/102,69/forecast
  */
 
 export const getSampleForecast = (): NwsForecast => ({
