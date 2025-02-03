@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
-import SunCalc from "suncalc";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  getAstronomicalData,
+  type AstronomicalDay,
+} from "./util/getAstronomicalData";
 
-interface SunsetRow {
+interface SunsetRow extends AstronomicalDay {
   id: number;
-  date: string;
-  sunriseTime: string;
-  sunsetTime: string;
-  moonriseTime: string;
-  moonsetTime: string;
-  moonPhase: string;
 }
 
 export const SunsetTimes: React.FC = () => {
@@ -17,27 +14,27 @@ export const SunsetTimes: React.FC = () => {
 
   const columns: GridColDef[] = [
     {
-      field: "date",
+      field: "displayDate",
       headerName: "Date",
       flex: 1,
     },
     {
-      field: "sunriseTime",
+      field: "sunrise",
       headerName: "Sunrise",
       flex: 1,
     },
     {
-      field: "sunsetTime",
+      field: "sunset",
       headerName: "Sunset",
       flex: 1,
     },
     {
-      field: "moonriseTime",
+      field: "moonrise",
       headerName: "Moonrise",
       flex: 1,
     },
     {
-      field: "moonsetTime",
+      field: "moonset",
       headerName: "Moonset",
       flex: 1,
     },
@@ -49,63 +46,22 @@ export const SunsetTimes: React.FC = () => {
   ];
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
-
-      // Calculate times for next 30 days
-      const times = Array.from({ length: 30 }, (_, index) => {
-        const date = new Date();
-        date.setDate(date.getDate() + index);
-
-        const sunTimes = SunCalc.getTimes(date, latitude, longitude);
-        const moonTimes = SunCalc.getMoonTimes(date, latitude, longitude);
-        const moonIllumination = SunCalc.getMoonIllumination(date);
-
-        // Convert moon phase number to descriptive text
-        const getMoonPhaseName = (phase: number) => {
-          if (phase < 0.05) return "New Moon";
-          if (phase < 0.25) return "Waxing Crescent";
-          if (phase < 0.3) return "First Quarter";
-          if (phase < 0.45) return "Waxing Gibbous";
-          if (phase < 0.55) return "Full Moon";
-          if (phase < 0.7) return "Waning Gibbous";
-          if (phase < 0.8) return "Last Quarter";
-          return "Waning Crescent";
-        };
-
-        const formatTime = (time: Date) =>
-          time.toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true,
-          });
-
-        return {
-          id: index,
-          date:
-            date.toLocaleDateString("en-US", {
-              weekday: "long",
-            }) +
-            " " +
-            date.toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-            }),
-          sunriseTime: formatTime(sunTimes.sunrise),
-          sunsetTime: formatTime(sunTimes.sunset),
-          moonriseTime: moonTimes.rise
-            ? formatTime(moonTimes.rise)
-            : "Not Visible",
-          moonsetTime: moonTimes.set
-            ? formatTime(moonTimes.set)
-            : "Not Visible",
-          moonPhase: getMoonPhaseName(moonIllumination.phase),
-        };
+    const fetchData = async () => {
+      const astronomicalData = await getAstronomicalData({
+        latitude: 34.416667,
+        longitude: -119.683333,
+        startDate: new Date(),
+        numberOfDays: 30,
       });
-      console.log(times);
 
-      setSunsetTimes(times);
-    });
+      setSunsetTimes(
+        astronomicalData.map((day, index) => ({
+          id: index,
+          ...day,
+        }))
+      );
+    };
+    fetchData();
   }, []);
 
   return (
@@ -114,7 +70,6 @@ export const SunsetTimes: React.FC = () => {
       <DataGrid
         rows={sunsetTimes}
         columns={columns}
-        // pageSizeOptions={[10, 20, 30]}
         initialState={{
           pagination: {
             paginationModel: { pageSize: 50 },

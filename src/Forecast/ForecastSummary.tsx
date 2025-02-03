@@ -1,5 +1,5 @@
 import { NwsForecast, fixName, fixShortForecast } from "./util";
-
+import { AstronomicalDay } from "./util/getAstronomicalData";
 import {
   Card,
   CardHeader,
@@ -12,7 +12,13 @@ import Grid from "@mui/material/Grid2";
 // https://mui.com/material-ui/react-grid2/
 // https://mui.com/material-ui/react-card/
 
-export const ForecastSummary = ({ forecast }: { forecast: NwsForecast }) => {
+export const ForecastSummary = ({
+  forecast,
+  astronomicalData,
+}: {
+  forecast: NwsForecast;
+  astronomicalData: AstronomicalDay[];
+}) => {
   const forecasts = forecast?.properties?.periods;
   if (!forecast || (Array.isArray(forecast) && forecast.length === 0)) {
     return <div>Sorry, forecast does not appear to have loaded</div>;
@@ -69,15 +75,15 @@ export const ForecastSummary = ({ forecast }: { forecast: NwsForecast }) => {
                   {fc?.isDaytime ? (
                     <>
                       <Typography variant="caption" display="block">
-                        sunrise
+                        {"sunrise: " + astronomicalData[i]?.sunrise}
                       </Typography>
                       <Typography variant="caption" display="block">
-                        sunset
+                        {"sunset: " + astronomicalData[i]?.sunset}
                       </Typography>
                     </>
                   ) : (
                     <Typography variant="caption" display="block">
-                      phase of moon
+                      {astronomicalData[i]?.moonPhase}
                     </Typography>
                   )}
                 </CardContent>

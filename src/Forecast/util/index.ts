@@ -1,5 +1,5 @@
 export * from "./getForecast";
-
+export * from "./getAstronomicalData";
 /**
  * quick-and-dirty helper functions to prevent name and shortForecast from wrapping
  * which messes up vertical alignment of cards

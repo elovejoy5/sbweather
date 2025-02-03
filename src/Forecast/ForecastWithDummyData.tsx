@@ -9,7 +9,7 @@ export const ForecastWithDummyData = () => {
         fails
       </p>
       <h1>Sample Data</h1>
-      <ForecastSummary forecast={apiSuccessJson} />
+      <ForecastSummary forecast={apiSuccessJson} astronomicalData={[]} />
     </div>
   );
 };

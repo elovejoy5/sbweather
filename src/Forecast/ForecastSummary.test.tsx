@@ -3,7 +3,9 @@ import { ForecastSummary } from "./ForecastSummary";
 import { getSampleForecast } from "./util";
 
 it("renders shortForecast && detailed forecast when getting at least one forecast", () => {
-  render(<ForecastSummary forecast={getSampleForecast()} />);
+  render(
+    <ForecastSummary forecast={getSampleForecast()} astronomicalData={[]} />
+  );
   expect(
     screen.getByText(
       "Patchy fog between 11pm and 5am. Mostly cloudy, with a low around 54. East northeast wind 5 to 10 mph."
