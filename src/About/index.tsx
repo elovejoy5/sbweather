@@ -32,7 +32,16 @@ export const About = () => (
           <td>Forecast data</td>
           <td>
             <a href="https://www.weather.gov/documentation/services-web-api">
-              APIs
+              https://www.weather.gov/documentation/services-web-api
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>NOAA Tides API</td>
+          <td>Tide predictions</td>
+          <td>
+            <a href="https://tidesandcurrents.noaa.gov/api/">
+              https://tidesandcurrents.noaa.gov/api/
             </a>
           </td>
         </tr>

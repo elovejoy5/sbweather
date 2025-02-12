@@ -6,7 +6,7 @@ import axios from "axios";
  *
  * getSampleForecast() can be used by tests
  */
-interface PeriodForecast {
+export interface PeriodForecast {
   number: number;
   name: string;
   startTime: string;

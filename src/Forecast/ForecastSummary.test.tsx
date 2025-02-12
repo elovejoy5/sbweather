@@ -4,7 +4,11 @@ import { getSampleForecast } from "./util";
 
 it("renders shortForecast && detailed forecast when getting at least one forecast", () => {
   render(
-    <ForecastSummary forecast={getSampleForecast()} astronomicalData={[]} />
+    <ForecastSummary
+      forecast={getSampleForecast()}
+      astronomicalData={[]}
+      tidePredictions={{ predictions: [] }}
+    />
   );
   expect(
     screen.getByText(

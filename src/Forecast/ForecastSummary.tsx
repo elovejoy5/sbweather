@@ -1,5 +1,6 @@
-import { NwsForecast, fixName, fixShortForecast } from "./util";
+import { NwsForecast, PeriodForecast, fixName, fixShortForecast } from "./util";
 import { AstronomicalDay } from "./util/getAstronomicalData";
+import { TidePredictions } from "./util/getTidePrediction";
 import {
   Card,
   CardHeader,
@@ -15,9 +16,11 @@ import Grid from "@mui/material/Grid2";
 export const ForecastSummary = ({
   forecast,
   astronomicalData,
+  tidePredictions,
 }: {
   forecast: NwsForecast;
   astronomicalData: AstronomicalDay[];
+  tidePredictions: TidePredictions;
 }) => {
   const forecasts = forecast?.properties?.periods;
   if (!forecast || (Array.isArray(forecast) && forecast.length === 0)) {
@@ -66,27 +69,11 @@ export const ForecastSummary = ({
                     {fc?.detailedForecast}
                   </Typography>
                 </CardContent>
-                <CardContent
-                  sx={{
-                    py: 1,
-                    zIndex: "modal",
-                  }}
-                >
-                  {fc?.isDaytime ? (
-                    <>
-                      <Typography variant="caption" display="block">
-                        {"sunrise: " + astronomicalData[i]?.sunrise}
-                      </Typography>
-                      <Typography variant="caption" display="block">
-                        {"sunset: " + astronomicalData[i]?.sunset}
-                      </Typography>
-                    </>
-                  ) : (
-                    <Typography variant="caption" display="block">
-                      {astronomicalData[i]?.moonPhase}
-                    </Typography>
-                  )}
-                </CardContent>
+                <SunMoonTideCardContent
+                  astronomicalDay={astronomicalData[i]}
+                  periodForecast={fc}
+                  tidePredictions={tidePredictions}
+                />
               </Card>
             </Grid>
           );
@@ -95,3 +82,45 @@ export const ForecastSummary = ({
     </div>
   );
 };
+
+function SunMoonTideCardContent({
+  astronomicalDay,
+  periodForecast,
+  tidePredictions,
+}: {
+  astronomicalDay: AstronomicalDay;
+  periodForecast: PeriodForecast;
+  tidePredictions: TidePredictions;
+}) {
+  const lowTides = tidePredictions.predictions.filter(
+    (tide) => tide.type === "L" && tide.t.includes(astronomicalDay.dateStamp)
+  );
+  return (
+    <CardContent
+      sx={{
+        py: 1,
+        zIndex: "modal",
+      }}
+    >
+      {periodForecast?.isDaytime ? (
+        <>
+          <Typography variant="caption" display="block">
+            {"sunrise: " + astronomicalDay?.sunrise}
+          </Typography>
+          <Typography variant="caption" display="block">
+            {"sunset: " + astronomicalDay?.sunset}
+          </Typography>
+        </>
+      ) : (
+        <>
+          <Typography variant="caption" display="block">
+            {astronomicalDay?.moonPhase}
+          </Typography>
+          <Typography variant="caption" display="block">
+            {astronomicalDay?.dateStamp}:{JSON.stringify(lowTides)}
+          </Typography>
+        </>
+      )}
+    </CardContent>
+  );
+}

@@ -8,6 +8,7 @@ interface GetAstronomicalDataParams {
 }
 
 export interface AstronomicalDay {
+  dateStamp: string;
   displayDate: string;
   sunrise: string;
   sunset: string;
@@ -49,6 +50,7 @@ export async function getAstronomicalData({
     const moonIllumination = SunCalc.getMoonIllumination(date);
 
     return {
+      dateStamp: date.toISOString().substring(0, 10),
       displayDate: `${date.toLocaleDateString("en-US", {
         weekday: "long",
       })} ${date.toLocaleDateString("en-US", {

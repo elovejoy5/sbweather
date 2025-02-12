@@ -3,6 +3,7 @@ import { getSampleForecast } from "./getForecast";
 
 const week = [
   {
+    dateStamp: "2025-01-01",
     displayDate: "one",
     sunrise: "oneRise",
     sunset: "oneSet",
@@ -11,6 +12,7 @@ const week = [
     moonset: "oneMoonset",
   },
   {
+    dateStamp: "2025-01-02",
     displayDate: "two",
     sunrise: "twoRise",
     sunset: "twoSet",
