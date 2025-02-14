@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { MastheadDrawer } from "./MastheadDrawer";
+import { LocationSelector } from "./LocationSelector";
 
 export function Masthead() {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -28,8 +29,9 @@ export function Masthead() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Santa Barbara Forecast
+            SB Weather
           </Typography>
+          <LocationSelector />
           {/* <Button color="inherit">Login</Button> */}
         </Toolbar>
       </AppBar>

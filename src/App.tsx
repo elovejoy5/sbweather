@@ -11,28 +11,31 @@ import { About } from "./About";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ForecastJson } from "./Forecast/ForecastJson";
 import { SunsetTimes } from "./Forecast/SunsetTimes";
+import { LocationProvider } from "./contexts/LocationContext";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      {/* basename so https://elovejoy5.github.io/sbweather/ will work */}
-      <BrowserRouter basename="/sbweather/">
-        <CssBaseline />
-        <Masthead />
-        <div className="App">
-          <Routes>
-            <Route path="about" element={<About />} />
-            <Route path="forecast" element={<Forecast />} />
-            <Route path="forecast/json" element={<ForecastJson />} />
-            <Route path="sunset" element={<SunsetTimes />} />
-            <Route path="/" element={<Navigate to="/forecast" />} />
-            <Route path="*" element={<Navigate to="/forecast" />} />
-          </Routes>
-        </div>
-        <Footer />
-      </BrowserRouter>
+      <LocationProvider>
+        {/* basename so https://elovejoy5.github.io/sbweather/ will work */}
+        <BrowserRouter basename="/sbweather/">
+          <CssBaseline />
+          <Masthead />
+          <div className="App">
+            <Routes>
+              <Route path="about" element={<About />} />
+              <Route path="forecast" element={<Forecast />} />
+              <Route path="forecast/json" element={<ForecastJson />} />
+              <Route path="sunset" element={<SunsetTimes />} />
+              <Route path="/" element={<Navigate to="/forecast" />} />
+              <Route path="*" element={<Navigate to="/forecast" />} />
+            </Routes>
+          </div>
+          <Footer />
+        </BrowserRouter>
+      </LocationProvider>
     </QueryClientProvider>
   );
 }
