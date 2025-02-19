@@ -92,9 +92,30 @@ function SunMoonTideCardContent({
   periodForecast: PeriodForecast;
   tidePredictions: TidePredictions;
 }) {
+  // Convert sunrise and sunset times to Date objects for comparison
+  const sunriseTime =
+    astronomicalDay &&
+    new Date(`${astronomicalDay.dateStamp} ${astronomicalDay.sunrise}`);
+  const sunsetTime =
+    astronomicalDay &&
+    new Date(`${astronomicalDay.dateStamp} ${astronomicalDay.sunset}`);
+
+  // Get all low tides for this date
   const lowTides = tidePredictions.predictions.filter(
-    (tide) => tide.type === "L" && tide.t.includes(astronomicalDay.dateStamp)
+    (tide) => tide.type === "L" && tide.t.startsWith(astronomicalDay.dateStamp)
   );
+
+  // Filter low tides by day and night
+  const lowTidesToday = lowTides.filter((tide) => {
+    const tideTime = new Date(tide.t);
+    return tideTime >= sunriseTime && tideTime <= sunsetTime;
+  });
+
+  const lowTidesTonight = lowTides.filter((tide) => {
+    const tideTime = new Date(tide.t);
+    return tideTime > sunsetTime;
+  });
+
   return (
     <CardContent
       sx={{
@@ -110,15 +131,24 @@ function SunMoonTideCardContent({
           <Typography variant="caption" display="block">
             {"sunset: " + astronomicalDay?.sunset}
           </Typography>
+          {lowTidesToday.length > 0 && (
+            <Typography variant="caption" display="block">
+              {"Low tides: " +
+                lowTidesToday.map((t) => t.t.split(" ")[1]).join(", ")}
+            </Typography>
+          )}
         </>
       ) : (
         <>
           <Typography variant="caption" display="block">
             {astronomicalDay?.moonPhase}
           </Typography>
-          <Typography variant="caption" display="block">
-            {astronomicalDay?.dateStamp}:{JSON.stringify(lowTides)}
-          </Typography>
+          {lowTidesTonight.length > 0 && (
+            <Typography variant="caption" display="block">
+              {"Low tides: " +
+                lowTidesTonight.map((t) => t.t.split(" ")[1]).join(", ")}
+            </Typography>
+          )}
         </>
       )}
     </CardContent>
