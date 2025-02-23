@@ -1,16 +1,15 @@
 import { ForecastSummary } from "./ForecastSummary";
 import { useQuery } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { getForecast } from "./util";
-import { getAstronomicalData } from "./util";
+import { getWxForecast } from "./util/getWxForecast";
+import { getAstronomicalData } from "./util/getAstronomicalData";
 import { getTidePrediction } from "./util/getTidePrediction";
 import { ForecastWithDummyData } from "./ForecastWithDummyData";
-import { expandAstronomicalWeek } from "./util/expandAstronomicalWeek";
 
 export const Forecast = () => {
   const nwsForecast = useQuery({
     queryKey: ["nwsForecast"],
-    queryFn: getForecast,
+    queryFn: getWxForecast,
     retry: false,
     gcTime: 300000, // 5 min cache = 1000*60*5
   });
@@ -53,16 +52,11 @@ export const Forecast = () => {
     return <ForecastWithDummyData />;
   }
 
-  const expandedWeek = expandAstronomicalWeek(
-    astronomicalDataWeek.data,
-    nwsForecast.data
-  );
-
   return (
     <div>
       <ForecastSummary
         forecast={nwsForecast.data}
-        astronomicalData={expandedWeek}
+        astronomicalData={astronomicalDataWeek.data}
         tidePredictions={tideForecast.data}
       />
       <ReactQueryDevtools initialIsOpen={false} />

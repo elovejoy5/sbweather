@@ -1,4 +1,4 @@
-export * from "./getForecast";
+export * from "./getWxForecast";
 export * from "./getTidePrediction";
 export * from "./getAstronomicalData";
 /**

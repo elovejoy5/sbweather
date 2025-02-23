@@ -18,17 +18,21 @@ export const Footer = () => {
         }}
         sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
       >
-        <BottomNavigationAction value="/" label="Home" icon={<Home />} />
         <BottomNavigationAction
-          value="/sunset"
-          label="Sunset Times"
+          value="/forecast"
+          label="Home"
+          icon={<Home />}
+        />
+        <BottomNavigationAction
+          value="/viewData/astronomical"
+          label="Astronomical Data"
           icon={<WbSunny />}
         />
         <BottomNavigationAction value="/about" label="About" icon={<Help />} />
         {showJsonLink && (
           <BottomNavigationAction
-            value="/forecast/json"
-            label="JSON"
+            value="/viewData/weather"
+            label="Weather Data"
             icon={<Settings />}
           />
         )}
