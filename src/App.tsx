@@ -9,8 +9,9 @@ import { Footer } from "./nav/Footer";
 import { Masthead } from "./nav/Masthead";
 import { About } from "./About";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ForecastJson } from "./Forecast/ForecastJson";
-import { SunsetTimes } from "./Forecast/SunsetTimes";
+import { WeatherForecastData } from "./Forecast/viewData/WeatherForecastData";
+import { AstronomicalData } from "./Forecast/viewData/AstronomicalData";
+import { TideData } from "./Forecast/viewData/TideData";
 
 const queryClient = new QueryClient();
 
@@ -25,8 +26,12 @@ function App() {
           <Routes>
             <Route path="about" element={<About />} />
             <Route path="forecast" element={<Forecast />} />
-            <Route path="forecast/json" element={<ForecastJson />} />
-            <Route path="sunset" element={<SunsetTimes />} />
+            <Route path="viewData/weather" element={<WeatherForecastData />} />
+            <Route
+              path="viewData/astronomical"
+              element={<AstronomicalData />}
+            />
+            <Route path="viewData/tides" element={<TideData />} />
             <Route path="/" element={<Navigate to="/forecast" />} />
             <Route path="*" element={<Navigate to="/forecast" />} />
           </Routes>

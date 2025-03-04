@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getForecast } from "./util";
+import { getWxForecast } from "../util/getWxForecast";
 
-export function ForecastJson() {
+export function WeatherForecastData() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["forecast"],
-    queryFn: getForecast,
+    queryFn: getWxForecast,
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -12,7 +12,7 @@ export function ForecastJson() {
 
   return (
     <div style={{ margin: "10px", overflow: "auto" }}>
-      <p>raw JSON from NWS API:</p>
+      <h1>Weather Forecast Data</h1>
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );

@@ -32,7 +32,16 @@ export const About = () => (
           <td>Forecast data</td>
           <td>
             <a href="https://www.weather.gov/documentation/services-web-api">
-              APIs
+              https://www.weather.gov/documentation/services-web-api
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>NOAA Tides API</td>
+          <td>Tide predictions</td>
+          <td>
+            <a href="https://tidesandcurrents.noaa.gov/api/">
+              https://tidesandcurrents.noaa.gov/api/
             </a>
           </td>
         </tr>
@@ -51,6 +60,7 @@ export const About = () => (
     <h2>Notes</h2>
     <p>2024</p>
     <ul>
+      <li>low tides from NOAA tides API</li>
       <li>suncalc for sun and moon times / phases</li>
       <li>Playing with cursor. Nice to have an AI to pair with!</li>
       <li>Updated dependencies to latest</li>
@@ -78,8 +88,15 @@ export const About = () => (
       </li>
     </ul>
     <p>
-      Since I'm often curious about the weather here, maybe I'll keep at it and
-      it will become more than a code sample.
+      This work is licensed under a{" "}
+      <a
+        rel="license"
+        href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+      >
+        Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+        License
+      </a>
+      .
     </p>
     <p>
       Browse on GitHub at{" "}

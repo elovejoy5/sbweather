@@ -1,5 +1,7 @@
-import { NwsForecast, fixName, fixShortForecast } from "./util";
-import { AstronomicalDay } from "./util/getAstronomicalData";
+import { NwsForecast, PeriodForecast, fixName, fixShortForecast } from "./util";
+// import { type ExpandedDay } from "./util/expandAstronomicalWeek";
+import { TidePredictions } from "./util/getTidePrediction";
+import { type AstronomicalEvent } from "./util/getAstronomicalData";
 import {
   Card,
   CardHeader,
@@ -12,12 +14,20 @@ import Grid from "@mui/material/Grid2";
 // https://mui.com/material-ui/react-grid2/
 // https://mui.com/material-ui/react-card/
 
+/**
+ *
+ * ForecastSummary renders a card for each forecast period
+ * SunMoonTideCardContent appends tide and astronomical events to bottom of each card
+ *
+ */
 export const ForecastSummary = ({
   forecast,
   astronomicalData,
+  tidePredictions,
 }: {
   forecast: NwsForecast;
-  astronomicalData: AstronomicalDay[];
+  astronomicalData: AstronomicalEvent[];
+  tidePredictions: TidePredictions;
 }) => {
   const forecasts = forecast?.properties?.periods;
   if (!forecast || (Array.isArray(forecast) && forecast.length === 0)) {
@@ -48,7 +58,7 @@ export const ForecastSummary = ({
                 <CardContent
                   sx={{
                     position: "absolute",
-                    bottom: "4.5em",
+                    bottom: "5.5em",
                     left: 0,
                     right: 0,
                     color: "white",
@@ -66,27 +76,11 @@ export const ForecastSummary = ({
                     {fc?.detailedForecast}
                   </Typography>
                 </CardContent>
-                <CardContent
-                  sx={{
-                    py: 1,
-                    zIndex: "modal",
-                  }}
-                >
-                  {fc?.isDaytime ? (
-                    <>
-                      <Typography variant="caption" display="block">
-                        {"sunrise: " + astronomicalData[i]?.sunrise}
-                      </Typography>
-                      <Typography variant="caption" display="block">
-                        {"sunset: " + astronomicalData[i]?.sunset}
-                      </Typography>
-                    </>
-                  ) : (
-                    <Typography variant="caption" display="block">
-                      {astronomicalData[i]?.moonPhase}
-                    </Typography>
-                  )}
-                </CardContent>
+                <SunMoonTideCardContent
+                  AstronomicalEvents={astronomicalData}
+                  periodForecast={fc}
+                  tidePredictions={tidePredictions}
+                />
               </Card>
             </Grid>
           );
@@ -95,3 +89,102 @@ export const ForecastSummary = ({
     </div>
   );
 };
+
+interface SunMoonTideCardContentProps {
+  AstronomicalEvents: AstronomicalEvent[];
+  periodForecast: PeriodForecast;
+  tidePredictions: TidePredictions;
+}
+
+function SunMoonTideCardContent({
+  AstronomicalEvents,
+  periodForecast,
+  tidePredictions,
+}: SunMoonTideCardContentProps) {
+  const date = periodForecast.startTime.substring(0, 10);
+  // Get all low tides for this date
+  let captions = [];
+  /**
+   * Day card? add sunrise, sunset, and low tides:
+   */
+  if (periodForecast.isDaytime) {
+    const sunrise = AstronomicalEvents.find(
+      (event) =>
+        event.type === "sunrise" && event.timestampLocal.startsWith(date)
+    );
+    if (sunrise?.timestampLocal) {
+      const sunriseString =
+        "sunrise: " + new Date(sunrise.timestampLocal).toLocaleTimeString();
+      captions.push(sunriseString);
+    }
+    const sunset = AstronomicalEvents.find(
+      (event) =>
+        event.type === "sunset" && event.timestampLocal.startsWith(date)
+    );
+    if (sunset?.timestampLocal) {
+      const sunsetString =
+        "sunset: " + new Date(sunset.timestampLocal).toLocaleTimeString();
+      captions.push(sunsetString);
+    }
+    const lowTides = tidePredictions.predictions.filter(
+      (tide) => tide.type === "L" && tide.t.startsWith(date)
+    );
+    // tide predictions look like:
+    // {"t":"2025-02-01 05:01","v":"1.381","type":"L"}
+    captions.push(
+      "Low tides: " +
+        lowTides.map((t) => t.v + "@" + t.t.split(" ")[1]).join(", ")
+    );
+  }
+  /**
+   * Night card? add moonrise, moonset:
+   */
+  if (!periodForecast.isDaytime) {
+    let moonPhase = 0;
+    const moonrise = AstronomicalEvents.find(
+      (event) =>
+        event.type === "moonrise" && event.timestampLocal.startsWith(date)
+    );
+    if (moonrise?.timestampLocal) {
+      const moonriseString =
+        "moonrise: " + new Date(moonrise.timestampLocal).toLocaleTimeString();
+      captions.push(moonriseString);
+      if (moonrise.moonPhase) {
+        moonPhase = moonrise.moonPhase;
+      }
+    }
+    const moonset = AstronomicalEvents.find(
+      (event) =>
+        event.type === "moonset" && event.timestampLocal.startsWith(date)
+    );
+    if (moonset?.timestampLocal) {
+      const moonsetString =
+        "moonset: " + new Date(moonset.timestampLocal).toLocaleTimeString();
+      captions.push(moonsetString);
+      if (moonset.moonPhase) {
+        moonPhase = moonset.moonPhase;
+      }
+    }
+    const getMoonPhaseName = (phase: number): string => {
+      if (phase < 0.05) return "New Moon";
+      if (phase < 0.25) return "Waxing Crescent";
+      if (phase < 0.3) return "First Quarter";
+      if (phase < 0.45) return "Waxing Gibbous";
+      if (phase < 0.55) return "Full Moon";
+      if (phase < 0.7) return "Waning Gibbous";
+      if (phase < 0.8) return "Last Quarter";
+      return "Waning Crescent";
+    };
+    captions.push(getMoonPhaseName(moonPhase));
+  }
+
+  return (
+    <CardContent sx={{ py: 1, zIndex: "modal" }}>
+      {captions.map((c, i) => (
+        <Typography variant="caption" display="block" key={i}>
+          {c}
+        </Typography>
+      ))}
+    </CardContent>
+  );
+}

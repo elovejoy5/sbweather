@@ -1,15 +1,15 @@
 import { ForecastSummary } from "./ForecastSummary";
 import { useQuery } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { getForecast } from "./util";
-import { getAstronomicalData } from "./util";
+import { getWxForecast } from "./util/getWxForecast";
+import { getAstronomicalData } from "./util/getAstronomicalData";
+import { getTidePrediction } from "./util/getTidePrediction";
 import { ForecastWithDummyData } from "./ForecastWithDummyData";
-import { expandAstronomicalWeek } from "./util/expandAstronomicalWeek";
 
 export const Forecast = () => {
   const nwsForecast = useQuery({
     queryKey: ["nwsForecast"],
-    queryFn: getForecast,
+    queryFn: getWxForecast,
     retry: false,
     gcTime: 300000, // 5 min cache = 1000*60*5
   });
@@ -27,28 +27,37 @@ export const Forecast = () => {
     gcTime: 3600000, // 1 hour cache = 1000*60*60
   });
 
-  if (nwsForecast.isPending || astronomicalDataWeek.isPending) {
+  const tideForecast = useQuery({
+    queryKey: ["tideForecast"],
+    queryFn: getTidePrediction,
+    retry: false,
+    gcTime: 3600000, // 1 hour cache
+  });
+
+  if (
+    nwsForecast.isPending ||
+    astronomicalDataWeek.isPending ||
+    tideForecast.isPending
+  ) {
     return <div>"Loading..."</div>;
   }
   if (
     nwsForecast.isError ||
     nwsForecast.data === undefined ||
-    astronomicalDataWeek.data === undefined
+    astronomicalDataWeek.data === undefined ||
+    tideForecast.isError ||
+    tideForecast.data === undefined
   ) {
     console.log(`getForecast returned error: ${nwsForecast.error}`);
     return <ForecastWithDummyData />;
   }
 
-  const expandedWeek = expandAstronomicalWeek(
-    astronomicalDataWeek.data,
-    nwsForecast.data
-  );
-
   return (
     <div>
       <ForecastSummary
         forecast={nwsForecast.data}
-        astronomicalData={expandedWeek}
+        astronomicalData={astronomicalDataWeek.data}
+        tidePredictions={tideForecast.data}
       />
       <ReactQueryDevtools initialIsOpen={false} />
     </div>

@@ -1,4 +1,5 @@
-export * from "./getForecast";
+export * from "./getWxForecast";
+export * from "./getTidePrediction";
 export * from "./getAstronomicalData";
 /**
  * quick-and-dirty helper functions to prevent name and shortForecast from wrapping
