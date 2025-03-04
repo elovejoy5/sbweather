@@ -88,8 +88,15 @@ export const About = () => (
       </li>
     </ul>
     <p>
-      Since I'm often curious about the weather here, maybe I'll keep at it and
-      it will become more than a code sample.
+      This work is licensed under a{" "}
+      <a
+        rel="license"
+        href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+      >
+        Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+        License
+      </a>
+      .
     </p>
     <p>
       Browse on GitHub at{" "}
