@@ -60,6 +60,7 @@ export const About = () => (
     <h2>Notes</h2>
     <p>2024</p>
     <ul>
+      <li>low tides from NOAA tides API</li>
       <li>suncalc for sun and moon times / phases</li>
       <li>Playing with cursor. Nice to have an AI to pair with!</li>
       <li>Updated dependencies to latest</li>

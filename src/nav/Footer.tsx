@@ -1,12 +1,14 @@
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
-import { Home, Help, Settings, WbSunny } from "@mui/icons-material";
+import { Home, Help, Settings, WbSunny, Waves } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export const Footer = () => {
   let navigate = useNavigate();
   let location = useLocation();
   const value = location.pathname;
-  const showJsonLink = location.pathname.startsWith("/forecast");
+  const showJsonLink =
+    location.pathname.startsWith("/forecast") ||
+    location.pathname.startsWith("/viewData");
 
   return (
     <div>
@@ -25,10 +27,14 @@ export const Footer = () => {
         />
         <BottomNavigationAction
           value="/viewData/astronomical"
-          label="Astronomical Data"
+          label="Astronomical"
           icon={<WbSunny />}
         />
-        <BottomNavigationAction value="/about" label="About" icon={<Help />} />
+        <BottomNavigationAction
+          value="/viewData/tides"
+          label="Tides"
+          icon={<Waves />}
+        />
         {showJsonLink && (
           <BottomNavigationAction
             value="/viewData/weather"
@@ -36,6 +42,7 @@ export const Footer = () => {
             icon={<Settings />}
           />
         )}
+        <BottomNavigationAction value="/about" label="About" icon={<Help />} />
       </BottomNavigation>
     </div>
   );

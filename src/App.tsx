@@ -11,6 +11,7 @@ import { About } from "./About";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WeatherForecastData } from "./Forecast/viewData/WeatherForecastData";
 import { AstronomicalData } from "./Forecast/viewData/AstronomicalData";
+import { TideData } from "./Forecast/viewData/TideData";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ function App() {
               path="viewData/astronomical"
               element={<AstronomicalData />}
             />
+            <Route path="viewData/tides" element={<TideData />} />
             <Route path="/" element={<Navigate to="/forecast" />} />
             <Route path="*" element={<Navigate to="/forecast" />} />
           </Routes>
